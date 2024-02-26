@@ -3,7 +3,7 @@ var app=express();
 
 const {MongoClient}=require('mongodb')
 
-var connection="mongodb+srv://ahmadziad758:4GccFyQvxL_gGJx@cluster0.vwd87ks.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+var connection="mongodb+srv://ahmadziad758:K64J8ZWLzndboJAh@cluster0.vwd87ks.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 const client= new MongoClient(connection)
 
@@ -35,16 +35,27 @@ var urlEncoded= bodyParse.urlencoded({extended:false})
 
 app.get("/form", function(req,res)
 {
-   // retunrn form .html 
+     res.sendFile(__dirname+"/form.html")
 })
 
+var fs= require('fs')
+
+app.get("/userinfo", function(req,res){
+     // var data=fs.readFileSync(__dirname+"/currentuser.txt")
+     // res.json(data)
+
+    var current= localStorage.getItem('currentUser')  //type of cash 
+    res.json(data)
+})
 
 app.post("/login",urlEncoded, async(req,res)=>
 {
-      const finduser= await collection.findOne({'username':req.body.username})
-      if (finduser) 
-      {
-          res.sendFile(__dirname+"/userInfo.html")
+      
+      
+      if (finduser= await collection.findOne({'email':req.body.email},{'password':req.body.password})) 
+      {   //fs.writeFileSync(__dirname+"/currentuser.txt")
+          //localStorage.setItem('currentUser', finduser)
+          res.sendFile(__dirname+"/userinfo.html")
       }
       else{
           res.sendFile(__dirname+"/register.html")
@@ -54,7 +65,7 @@ app.post("/login",urlEncoded, async(req,res)=>
 
 app.post("/register",urlEncoded, async(req,res)=>
 {    //find 
-     const createuser= await collection.insertOne({'username': req.body.username})
+     const createuser= await collection.insertOne({'email': req.body.email,'password':req.body.password,'username':req.body.username,'age':req.body.age,'gender':req.body.gender,})
     
 })
 
@@ -62,7 +73,7 @@ app.post("/register",urlEncoded, async(req,res)=>
 
 
 
-var server= app.listen(9000,function()
+var server= app.listen(8000,function()
 {
      var host = server.address().address
      var port=server.address().port

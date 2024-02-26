@@ -6,10 +6,24 @@
     <title>Document</title>
 </head>
 <body>
-    <p>username :</p>
+    <p id="username">username :</p>
     <p>password :</p>
     <p>age :</p>
     <p>gender :</p>
     <p>email :</p>
+    <script> 
+        function onload()
+        {  
+
+        var current=localStorage.getItem('email')    
+        // var xmlHttp = new XMLHttpRequest();
+        // xmlHttp.open( "GET", "http://localhost:9000/userInfo", false ); // false for synchronous request
+        // xmlHttp.send( null );
+        // var myres = xmlHttp.responseText;
+        document.getElementById("email").innerHTML= 
+}
+
+        </script>
+        
 </body>
 </html>
